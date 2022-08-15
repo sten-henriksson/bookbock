@@ -1,6 +1,7 @@
 import type { AppProps } from 'next/app'
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useRouter } from 'next/router'
+import Link from 'next/link'
 type FormValues = {
   search: string;
 };
@@ -15,7 +16,7 @@ function MyApp({ Component, pageProps }: AppProps) {
   };
   return <div><nav>
     <form onSubmit={handleSubmit(onSubmit)}>
-      <h1 id='nav_button'> 🐉<a id='nav_link' href="/"></a></h1>
+      <h1 id='nav_button'> 🐉<Link href="/" id='nav_link'></Link></h1>
       <input {...register("search")} placeholder="seach" />
     </form>
   </nav>

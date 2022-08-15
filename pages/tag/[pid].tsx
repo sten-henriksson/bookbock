@@ -7,7 +7,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   console.log("helo");
 
   const id = context.params;
-  const res = await fetch(`http://localhost:5010/tagsearch/` + id?.pid)
+  const res = await fetch(process.env.NEXT_PUBLIC_ENV_APIURL + `/tagsearch/` + id?.pid)
   const data: Book[] = await res.json()
   console.log(data);
 
