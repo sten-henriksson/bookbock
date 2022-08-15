@@ -1,18 +1,25 @@
-import { InferGetStaticPropsType } from 'next'
+import { GetServerSideProps, GetServerSidePropsContext, InferGetServerSidePropsType } from 'next'
 import Head from 'next/head'
-import { tag } from '../types'
-import {TagElem} from '../components/list-component'
-export const getStaticProps = async () => {
-  const res = await fetch('http://localhost:5010/tags')
-  const books: tag[] = await res.json()
+import { Book } from '../../types'
+import { BookElem } from '../../components/list-component'
+import { Key } from 'react'
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  console.log("helo");
+
+  const id = context.params;
+  const res = await fetch(`http://localhost:5010/search/` + id?.pid)
+  const data: Book[] = await res.json()
+  console.log(data);
+
   return {
     props: {
-      books: books,
+      books: await data,
     },
   }
 }
+const Blog = ({ books }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
+  console.log(books);
 
-function Blog({ books }: InferGetStaticPropsType<typeof getStaticProps>) {
   // will resolve posts to type Post[]6
 
   return (
@@ -23,9 +30,9 @@ function Blog({ books }: InferGetStaticPropsType<typeof getStaticProps>) {
 
       <main>
         {
-          books.map((x, index) => {
+          books.map((x: Book, index: Key) => {
             return <div key={index}>
-              {TagElem(x)}
+              {BookElem({ name: x.name, hash: x.hash, path: x.path })}
             </div>
           })
         }
@@ -50,5 +57,4 @@ function Blog({ books }: InferGetStaticPropsType<typeof getStaticProps>) {
     </div>
   )
 }
-
 export default Blog

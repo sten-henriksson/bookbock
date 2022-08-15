@@ -1,34 +1,125 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+https://nextjs.org/docs/basic-features/data-fetching/incremental-static-regeneration
+https://www.npmjs.com/package/path-sort
 
-## Getting Started
+# todo
 
-First, run the development server:
+- 2 list component with library
+- 2 search page with url param
+- 2 seachbar component and api call
+- 3 url param page component that display book info ipfs link and ipfs cid
 
-```bash
-npm run dev
-# or
-yarn dev
-```
+# done
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- server calls with incrimental static props
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+# home page: select games and searchbar
+> game page = path sort
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
 
-## Learn More
+version: "3.7"
+services:
+  gluetun:
+    image: qmcgaw/gluetun
+    container_name: gluetun
+    cap_add:
+      - NET_ADMIN
+    ports:
+      - 8000:8000 # Remote Control VPN
+      - 8888:8888 # Tinyproxy
+      - 9117:9117 # Jackett
+      - 9091:9091 # Transmission
+      - 51413:51413 # Transmission
+      - 51413:51413/udp # Transmission
+    environment:
+      - VPNSP=private internet access
+      - USER=<your username>
+      - PASSWORD=<your password>
+      - TZ=<your timezone>
+      - UID=1000
+      - GID=1000
+      - REGION=<your region>
+      - FIREWALL_OUTBOUND_SUBNETS=10.0.0.0/8
+      - HTTPPROXY=on
+    dns:
+      - 209.222.18.222 # Default to PIA DNS servers
+      - 209.222.18.218
+    restart: always
 
-To learn more about Next.js, take a look at the following resources:
+  transmission:
+    image: linuxserver/transmission
+    container_name: transmission
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=<your timezone>
+    volumes:
+      - transmission-config:/config
+      - <your folder>:/downloads/complete
+      - <your folder>:/downloads/incomplete
+    network_mode: 'service:gluetun'
+    depends_on:
+      - gluetun
+    restart: always
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+  jackett:
+    image: linuxserver/jackett
+    container_name: jackett
+    environment:
+      - PGID=1000
+      - PUID=1000
+      - TZ=<your timezone>
+    volumes:
+      - jackett-config:/config
+    network_mode: 'service:gluetun'
+    depends_on:
+      - gluetun
+    restart: always
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+  sonarr:
+    image: linuxserver/sonarr:preview
+    container_name: sonarr
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=<your timezone>
+      - UMASK_SET=022
+    volumes:
+      - sonarr-config:/config
+      - <your folder>:/downloads/complete
+      - <your folder>:/media
+    ports:
+      - 8989:8989
+    depends_on:
+      - jackett
+      - transmission
+    restart: always
 
-## Deploy on Vercel
+  radarr:
+    image: linuxserver/radarr
+    container_name: radarr
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=<your timezone>
+      - UMASK_SET=022
+    volumes:
+      - radarr-config:/config
+      - <your folder>:/downloads/complete
+      - <your folder>:/media
+    ports:
+      - 7878:7878
+    depends_on:
+      - jackett
+      - transmission
+    restart: always
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+volumes:
+  transmission-config:
+    external: true
+  jackett-config:
+    external: true
+  sonarr-config:
+    external: true
+  radarr-config:
+    external: true
