@@ -16,7 +16,7 @@ function MyApp({ Component, pageProps }: AppProps) {
   };
   return <div><nav>
     <form onSubmit={handleSubmit(onSubmit)}>
-      <h1 id='nav_button'> 🐉<Link href="/" id='nav_link'></Link></h1>
+      <Link href="/"><h1 id='nav_button'>🐉</h1></Link>
       <input {...register("search")} placeholder="seach" />
     </form>
   </nav>
@@ -39,9 +39,9 @@ function MyApp({ Component, pageProps }: AppProps) {
           margin: -5px;
           margin-left: 5px;
           margin-right: 5px;
-        }
-        #nav_link{
-          text-decoration: none
+          color: inherit;
+          text-decoration: inherit;
+          cursor: pointer;
         }
         main{
           margin-right: 15%;
