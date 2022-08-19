@@ -2,7 +2,7 @@ import { GetServerSideProps, GetServerSidePropsContext, InferGetServerSidePropsT
 import Head from 'next/head'
 import { Key } from 'react'
 import { ApiCall, Book } from '../../types'
-import { BookElem, footerPageSelector } from '../../components/list-component'
+import { BookElem, FooterPageSelector } from '../../components/list-component'
 export const getServerSideProps: GetServerSideProps = async (context) => {
   console.log("helo");
   const id = context.query;
@@ -35,7 +35,7 @@ const Blog = ({ apicall, totalpages, currentPage, keyword }: InferGetServerSideP
             </div>
           })
         }
-        {footerPageSelector({ url: keyword, total_pages: totalpages, current_page: currentPage })}
+        {FooterPageSelector({ url: keyword, total_pages: totalpages, current_page: currentPage })}
       </main>
 
       <style jsx global>{`

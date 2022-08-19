@@ -4,13 +4,13 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 export const BookElem = ({ name, hash, path }: Book) => (
-    <p><a target={"_blank"} href={"https://ipfs.io/ipfs/" + hash + "?filename=" + name} >{name}</a></p>
+    <p><a target="_blank" rel="noreferrer" href={"https://ipfs.io/ipfs/" + hash + "?filename=" + name} >{name}</a></p>
 );
 export const TagElem = ({ path }: tag) => (
     <p> <Link href={`/tag/${path.toString().replace(/\//g, '_')}?page=1`} >{path}</Link> </p>
 );
 
-export const footerPageSelector = ({ total_pages, current_page, url: searchTerm }: footerParam) => {
+export const FooterPageSelector = ({ total_pages, current_page, url: searchTerm }: footerParam) => {
     const router = useRouter()
     type FormValues = {
         page: string;
