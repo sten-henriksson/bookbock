@@ -12,16 +12,10 @@ export const getStaticProps = async () => {
     },
   }
 }
-
 function Blog({ books }: InferGetStaticPropsType<typeof getStaticProps>) {
   // will resolve posts to type Post[]6
-
   return (
     <div>
-      <Head>
-        <title>Create Next App</title>
-      </Head>
-
       <main>
         {
           books.map((x, index) => {
@@ -32,24 +26,9 @@ function Blog({ books }: InferGetStaticPropsType<typeof getStaticProps>) {
         }
       </main>
       <style jsx global>{`
-        a {
-          color: white;
-        }
-        html,
-        body {
-          background: #121212;
-          padding: 0;
-          margin: 0;
-          font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto,
-            Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue,
-            sans-serif;
-        }
-        * {
-          box-sizing: border-box;
-        }
+        
       `}</style>
     </div>
   )
 }
-
 export default Blog
