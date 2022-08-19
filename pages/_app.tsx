@@ -20,7 +20,7 @@ function MyApp({ Component, pageProps }: AppProps) {
     <form onSubmit={handleSubmit(onSubmit)}>
       <Link href="/"><h1 id='nav_button_pc'>book-book</h1></Link>
       <Link href="/"><h1>🐔</h1></Link>
-      <input {...register("search")} placeholder="seach" />
+      <input {...register("search")} placeholder="search" />
       <Link href="/faq"><h1 id='nav_button_faq'>faq</h1></Link>
     </form>
   </nav>
@@ -53,7 +53,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         h1{
           margin-left: 15px;
           margin-right: 15px;
-          font-size: 4.5vh;
+          font-size: 40px;
           margin: -5px;
           margin-left: 5px;
           margin-right: 5px;
