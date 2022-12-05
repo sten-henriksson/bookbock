@@ -7,13 +7,13 @@ function faq() {
           {"Why?"}
         </h1>
         <p>
-          Created this after thetrove got shut down and most of the tabletop rpg books i want requires some effort to find.
+          Made for my tabletop rpg group collection of books. One place to find them all and accessible over mobile.
         </p>
         <h1>
           Is this legal?
         </h1>
         <p>
-          Nothing is hosted on this site and all books are retrieved from ipfs
+          Nothing is hosted on this website or its servers. Buuut probably yes but its made for a private community if your not in it don't click any downloads
         </p>
         <h1>
           What is ipfs?
@@ -25,7 +25,7 @@ function faq() {
           I cant load pdf
         </h1>
         <p>
-          recommend to use ipfs <a href="https://docs.ipfs.tech/install/ipfs-desktop/">desktop</a> and the browser extension.
+         I recommend to use ipfs <a href="https://docs.ipfs.tech/install/ipfs-desktop/">desktop</a> and the browser extension. Otherwise the gateway can be down and not really anything you can do about that.
         </p>
       </main>
       <style jsx global>{`
