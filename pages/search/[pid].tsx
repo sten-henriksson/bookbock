@@ -3,12 +3,12 @@ import Head from 'next/head'
 import { Book, ApiCall } from '../../types'
 import { BookElem, FooterPageSelector } from '../../components/list-component'
 import { Key } from 'react'
+import axios from 'axios';
 export const getServerSideProps: GetServerSideProps = async (context) => {
   console.log("helo");
-
   const id = context.query;
-  const res = await fetch(`${process.env.NEXT_PUBLIC_ENV_APIURL}/search/${id?.page}/${id?.pid}`)
-  const data: ApiCall = await res.json()
+  const res = await axios.get(`${process.env.NEXT_PUBLIC_ENV_APIURL}/search/${id?.page}/${id?.pid}`)
+  const data: ApiCall = await res.data
   console.log(context.query.page);
 
   return {
